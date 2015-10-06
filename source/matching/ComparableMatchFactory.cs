@@ -1,5 +1,7 @@
 using System;
 using code.prep.movies;
+using code.enumerables;
+
 namespace code.matching
 
 {
@@ -15,15 +17,20 @@ namespace code.matching
       this.original = original;
     }
 
+    public IMatchAn<Item> create_anonymous_match(Criteria<Item> criteria)
+    {
+        return original.create_anonymous_match(criteria);
+    }
+
     public IMatchAn<Item> greater_than(AttributeType value)
     {
-      return new AnonymousMatch<Item>(x => accessor(x).CompareTo(value) > 0);
+      return create_anonymous_match(x => accessor(x).CompareTo(value) > 0);
     }
 
     public IMatchAn<Item> between(AttributeType start, AttributeType end)
     {
-      return new AnonymousMatch<Item>(x => accessor(x).CompareTo(start) >= 0 &&
-                                           accessor(x).CompareTo(end) <= 0);
+      return create_anonymous_match(x => accessor(x).CompareTo(start) >= 0 &&
+                               accessor(x).CompareTo(end) <= 0);
     }
 
     public IMatchAn<Item> equal_to(AttributeType value)

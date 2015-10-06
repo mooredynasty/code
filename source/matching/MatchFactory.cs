@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using code.prep.movies;
+using code.enumerables;
 
 namespace code.matching
 {
@@ -12,6 +13,11 @@ namespace code.matching
       this.accessor = accessor;
     }
 
+    public IMatchAn<Item> create_anonymous_match(Criteria<Item> criteria)
+    {
+        return new AnonymousMatch<Item>(criteria);
+    }
+
     public IMatchAn<Item> equal_to(AttributeType value)
     {
       return equal_to_any(value);
@@ -19,7 +25,7 @@ namespace code.matching
 
     public IMatchAn<Item> equal_to_any(params AttributeType[] values)
     {
-      return new AnonymousMatch<Item>(x =>
+      return create_anonymous_match(x =>
         new List<AttributeType>(values).Contains(accessor(x)));
     }
 
