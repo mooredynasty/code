@@ -24,5 +24,21 @@ namespace code.matching
       return new AnonymousMatch<Item>(x => accessor(x).CompareTo(start) >= 0 &&
       accessor(x).CompareTo(end) <=0);
     }
+
+    // wrap around the MatchFactory
+    public IMatchAn<Item> equal_to(AttributeType value)
+    {
+        return new MatchFactory<Item, AttributeType>(accessor).equal_to(value);
+    }
+
+    public IMatchAn<Item> equal_to_any(params AttributeType[] values)
+    {
+        return new MatchFactory<Item, AttributeType>(accessor).equal_to_any(values);
+    }
+
+    public IMatchAn<Item> not_equal_to(AttributeType value)
+    {
+        return new MatchFactory<Item, AttributeType>(accessor).not_equal_to(value);
+    }
   }
 }
