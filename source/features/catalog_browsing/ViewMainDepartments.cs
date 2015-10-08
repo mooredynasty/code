@@ -4,9 +4,16 @@ namespace code.features.catalog_browsing
 {
   public class ViewMainDepartments : IRunAUserFeature
   {
+      private IGetDepartments departments;
+
+      public ViewMainDepartments(IGetDepartments departments)
+      {
+          this.departments = departments;
+      }
     public void process(IProvideDetailsToHandlers request)
     {
-      throw new System.NotImplementedException();
+        this.departments = departments;
+        departments.main_departments();
     }
   }
 }
