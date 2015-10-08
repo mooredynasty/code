@@ -4,16 +4,19 @@ namespace code.features.catalog_browsing
 {
   public class ViewMainDepartments : IRunAUserFeature
   {
-      private IGetDepartments departments;
+    IGetDepartments departments;
+    IDisplayInformation display_engine;
 
-      public ViewMainDepartments(IGetDepartments departments)
-      {
-          this.departments = departments;
-      }
+    public ViewMainDepartments(IGetDepartments departments, IDisplayInformation display_engine)
+    {
+      this.departments = departments;
+      this.display_engine = display_engine;
+    }
+
     public void process(IProvideDetailsToHandlers request)
     {
-        this.departments = departments;
-        departments.main_departments();
+      var result = departments.main_departments();
+      display_engine.display(result);
     }
   }
 }

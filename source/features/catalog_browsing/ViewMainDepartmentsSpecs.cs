@@ -1,5 +1,7 @@
-﻿using code.web;
+﻿using System.Collections.Generic;
+using code.web;
 using developwithpassion.specifications.assertions;
+using developwithpassion.specifications.extensions;
 using developwithpassion.specifications.observations;
 using developwithpassion.specifications.should;
 using Machine.Fakes.Adapters.Rhinomocks;
@@ -22,7 +24,15 @@ namespace code.features.catalog_browsing
       Establish c = () =>
       {
         request = fake.an<IProvideDetailsToHandlers>();
+        display_engine = depends.on<IDisplayInformation>();
         departments = depends.on<IGetDepartments>();
+
+        main_departments = new List<MainDepartment>
+        {
+          new MainDepartment()
+        };
+
+        departments.setup(x => x.main_departments()).Return(main_departments);
       };
 
       Because b = () =>
@@ -31,8 +41,13 @@ namespace code.features.catalog_browsing
       It gets_the_main_departments = () =>
         departments.should().have_received(x => x.main_departments());
 
+      It displays_the_main_departments = () =>
+        display_engine.should().have_received(x => x.display(main_departments));
+
       static IGetDepartments departments;
       static IProvideDetailsToHandlers request;
+      static IDisplayInformation display_engine;
+      static IEnumerable<MainDepartment> main_departments;
     }
   }
 }
