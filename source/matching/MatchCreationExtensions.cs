@@ -44,6 +44,27 @@ namespace code.matching
       return falls_in_range(extension_point, new RangeWithNoUpperBound<AttributeType>(value));
     }
 
+    public static IMatchAn<Item> greater_than_or_equal<Item, AttributeType>(
+      this IProvideAccessToCreateMatchers<Item, AttributeType> extension_point, AttributeType value)
+      where AttributeType : IComparable<AttributeType>
+    {
+      return falls_in_range(extension_point, new InclusiveRangeWithNoUpperBound<AttributeType>(value));
+    }
+
+    public static IMatchAn<Item> less_than<Item, AttributeType>(
+      this IProvideAccessToCreateMatchers<Item, AttributeType> extension_point, AttributeType value)
+      where AttributeType : IComparable<AttributeType>
+    {
+      return falls_in_range(extension_point, new RangeWithNoLowerBound<AttributeType>(value));
+    }
+
+    public static IMatchAn<Item> less_than_or_equal<Item, AttributeType>(
+      this IProvideAccessToCreateMatchers<Item, AttributeType> extension_point, AttributeType value)
+      where AttributeType : IComparable<AttributeType>
+    {
+      return falls_in_range(extension_point, new InclusiveRangeWithNoLowerBound<AttributeType>(value));
+    }
+
     public static IMatchAn<Item> between<Item, AttributeType>(
       this IProvideAccessToCreateMatchers<Item, AttributeType> extension_point, AttributeType start, AttributeType end)
       where AttributeType : IComparable<AttributeType>
